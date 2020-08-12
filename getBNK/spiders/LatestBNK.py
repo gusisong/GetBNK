@@ -41,15 +41,13 @@ class LatestBNKSpider(scrapy.Spider):
         Plant = response.xpath('/html/body/table//tr/td/form/table//tr[1]/td/table//tr/td[4]/text()').get()
         CostType = response.xpath('/html/body/table//tr/td/form/table//tr[1]/td/table//tr/td[5]/text()').get()
 
-        if response.xpath('//td[@class="rich-table-cell "]/text()').getall() == []:
-            LspSapNum = None
-        else:
+        if response.xpath('//td[@class="rich-table-cell "]/text()').getall():
             LspSapNum = response.xpath('//td[@class="rich-table-cell "]/text()').getall()[-2]
-
-        if response.xpath('//td[@class="rich-table-cell "]/text()').getall() == []:
-            Price = None
-        else:
             Price = response.xpath('//td[@class="rich-table-cell "]/text()').getall()[-1]
+
+        else:
+            LspSapNum = None
+            Price = None
 
         item = {
             "零件号": PartNum,
